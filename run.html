@@ -385,13 +385,13 @@ border-radius: 0 2px 2px 0;
 }
 
 /* Phase colors */
-.phase-Base       { background: rgba(74,222,128,0.12); color: var(–base); }
-.phase-Build      { background: rgba(96,165,250,0.12); color: var(–build); }
-.phase-Recovery   { background: rgba(251,191,36,0.12); color: var(–recovery); }
-.phase-Peak       { background: rgba(248,113,113,0.12); color: var(–peak); }
-.phase-Taper      { background: rgba(192,132,252,0.12); color: var(–taper); }
-.phase-Rebuild    { background: rgba(52,211,153,0.12); color: var(–rebuild); }
-.phase-RACE       { background: rgba(255,107,53,0.2); color: var(–race); }
+.phase-Base       { background: rgba(74,222,128,0.12); color: var(--base); }
+.phase-Build      { background: rgba(96,165,250,0.12); color: var(--build); }
+.phase-Recovery   { background: rgba(251,191,36,0.12); color: var(--recovery); }
+.phase-Peak       { background: rgba(248,113,113,0.12); color: var(--peak); }
+.phase-Taper      { background: rgba(192,132,252,0.12); color: var(--taper); }
+.phase-Rebuild    { background: rgba(52,211,153,0.12); color: var(--rebuild); }
+.phase-RACE       { background: rgba(255,107,53,0.2); color: var(--race); }
 
 /* Toast */
 .toast {
@@ -418,8 +418,8 @@ transform: translateY(0);
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(–bg); }
-::-webkit-scrollbar-thumb { background: var(–border); border-radius: 2px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
 .hero-divider {
 width: 40px; height: 2px;
@@ -541,7 +541,7 @@ const STORAGE_KEY = 'hm_tracker_v1';
 // JSONBin config — filled in after setup
 const JSONBIN_API_KEY = '$2a$10$kwwjQjvpD3s8YQTSWlXb.ez6xuuNgehxjdsynFA5L7HROgh8Dwaiq';
 const JSONBIN_BIN_ID  = '69bab815c3097a1dd537f7d7';
-const JSONBIN_URL     = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
+const JSONBIN_URL     = 'https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}';
 
 function loadState() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; }
