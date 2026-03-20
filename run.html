@@ -39,7 +39,7 @@ min-height: 100vh;
 .hero {
 position: relative;
 padding: 48px 32px 32px;
-border-bottom: 1px solid var(–border);
+border-bottom: 1px solid var(--border);
 overflow: hidden;
 }
 
@@ -70,7 +70,7 @@ letter-spacing: 2px;
 color: var(–text);
 }
 
-.hero h1 span { color: var(–accent); }
+.hero h1 span { color: var(--accent); }
 
 .hero-meta {
 display: flex;
@@ -123,7 +123,7 @@ color: var(–accent);
 
 .stat-label {
 font-size: 11px;
-color: var(–muted);
+color: var(--muted);
 text-transform: uppercase;
 letter-spacing: 1px;
 font-family: ‘DM Mono’, monospace;
@@ -131,14 +131,14 @@ font-family: ‘DM Mono’, monospace;
 
 .progress-bar-wrap {
 height: 6px;
-background: var(–border);
+background: var(--border);
 border-radius: 3px;
 overflow: hidden;
 }
 
 .progress-bar-fill {
 height: 100%;
-background: linear-gradient(90deg, var(–accent), var(–accent2));
+background: linear-gradient(90deg, var(--accent), var(--accent2));
 border-radius: 3px;
 transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -165,16 +165,16 @@ letter-spacing: 1px;
 text-transform: uppercase;
 padding: 7px 16px;
 border-radius: 2px;
-border: 1px solid var(–border);
+border: 1px solid var(--border);
 background: transparent;
-color: var(–muted);
+color: var(--muted);
 cursor: pointer;
 transition: all 0.15s;
 }
 
 .filter-btn:hover, .filter-btn.active {
-border-color: var(–accent);
-color: var(–accent);
+border-color: var(--accent);
+color: var(--accent);
 background: rgba(232,255,71,0.05);
 }
 
@@ -186,8 +186,8 @@ gap: 4px;
 }
 
 .week-card {
-background: var(–card);
-border: 1px solid var(–border);
+background: var(--card);
+border: 1px solid var(--border);
 border-radius: 4px;
 overflow: hidden;
 transition: border-color 0.15s;
@@ -195,8 +195,8 @@ transition: border-color 0.15s;
 
 .week-card:hover { border-color: #3a3d44; }
 
-.week-card.completed { border-left: 3px solid var(–done); }
-.week-card.current { border-left: 3px solid var(–accent); }
+.week-card.completed { border-left: 3px solid var(--done); }
+.week-card.current { border-left: 3px solid var(--accent); }
 
 .week-header {
 display: grid;
@@ -215,8 +215,8 @@ color: var(–muted);
 line-height: 1;
 }
 
-.week-card.current .week-num { color: var(–accent); }
-.week-card.completed .week-num { color: var(–done); }
+.week-card.current .week-num { color: var(--accent); }
+.week-card.completed .week-num { color: var(--done); }
 
 .week-dates {
 font-family: ‘DM Mono’, monospace;
@@ -243,16 +243,16 @@ align-items: center;
 .run-dot {
 width: 10px; height: 10px;
 border-radius: 50%;
-border: 1.5px solid var(–border);
+border: 1.5px solid var(--border);
 background: transparent;
 transition: all 0.2s;
 }
 
-.run-dot.done { background: var(–done); border-color: var(–done); }
+.run-dot.done { background: var(--done); border-color: var(--done); }
 
 .chevron {
 width: 20px; height: 20px;
-color: var(–muted);
+color: var(--muted);
 transition: transform 0.2s;
 flex-shrink: 0;
 }
@@ -263,7 +263,7 @@ flex-shrink: 0;
 .week-body {
 display: none;
 padding: 0 20px 20px;
-border-top: 1px solid var(–border);
+border-top: 1px solid var(--border);
 }
 
 .week-card.open .week-body { display: block; }
@@ -282,8 +282,8 @@ margin-top: 16px;
 }
 
 .run-card {
-background: var(–surface);
-border: 1.5px solid var(–border);
+background: var(--surface);
+border: 1.5px solid var(--border);
 border-radius: 4px;
 padding: 16px;
 cursor: pointer;
@@ -301,9 +301,9 @@ opacity: 0;
 transition: opacity 0.2s;
 }
 
-.run-card.easy::before { background: var(–base); }
-.run-card.tempo::before { background: var(–build); }
-.run-card.long::before { background: var(–accent2); }
+.run-card.easy::before { background: var(--base); }
+.run-card.tempo::before { background: var(--build); }
+.run-card.long::before { background: var(--accent2); }
 
 .run-card:hover { border-color: #3a3d44; }
 .run-card:hover::before { opacity: 1; }
@@ -313,7 +313,7 @@ border-color: rgba(34,197,94,0.4);
 background: rgba(34,197,94,0.04);
 }
 
-.run-card.checked::before { opacity: 1; background: var(–done) !important; }
+.run-card.checked::before { opacity: 1; background: var(--done) !important; }
 
 .run-type-label {
 font-family: ‘DM Mono’, monospace;
@@ -324,9 +324,9 @@ color: var(–muted);
 margin-bottom: 8px;
 }
 
-.run-card.easy .run-type-label { color: var(–base); }
-.run-card.tempo .run-type-label { color: var(–build); }
-.run-card.long .run-type-label { color: var(–accent2); }
+.run-card.easy .run-type-label { color: var(--base); }
+.run-card.tempo .run-type-label { color: var(--build); }
+.run-card.long .run-type-label { color: var(--accent2); }
 
 .run-description {
 font-size: 15px;
@@ -351,11 +351,11 @@ color: var(–muted);
 transition: color 0.15s;
 }
 
-.run-card.checked .run-check-btn { color: var(–done); }
+.run-card.checked .run-check-btn { color: var(--done); }
 
 .check-icon {
 width: 18px; height: 18px;
-border: 1.5px solid var(–border);
+border: 1.5px solid var(--border);
 border-radius: 50%;
 display: flex;
 align-items: center;
@@ -365,8 +365,8 @@ flex-shrink: 0;
 }
 
 .run-card.checked .check-icon {
-background: var(–done);
-border-color: var(–done);
+background: var(--done);
+border-color: var(--done);
 }
 
 .check-icon svg { opacity: 0; transition: opacity 0.15s; }
@@ -376,7 +376,7 @@ border-color: var(–done);
 margin-top: 14px;
 padding: 12px 16px;
 background: rgba(255,255,255,0.02);
-border-left: 2px solid var(–border);
+border-left: 2px solid var(--border);
 font-size: 13px;
 color: var(–muted);
 line-height: 1.5;
@@ -385,20 +385,20 @@ border-radius: 0 2px 2px 0;
 }
 
 /* Phase colors */
-.phase-Base       { background: rgba(74,222,128,0.12); color: var(–base); }
-.phase-Build      { background: rgba(96,165,250,0.12); color: var(–build); }
-.phase-Recovery   { background: rgba(251,191,36,0.12); color: var(–recovery); }
-.phase-Peak       { background: rgba(248,113,113,0.12); color: var(–peak); }
-.phase-Taper      { background: rgba(192,132,252,0.12); color: var(–taper); }
-.phase-Rebuild    { background: rgba(52,211,153,0.12); color: var(–rebuild); }
-.phase-RACE       { background: rgba(255,107,53,0.2); color: var(–race); }
+.phase-Base       { background: rgba(74,222,128,0.12); color: var(--base); }
+.phase-Build      { background: rgba(96,165,250,0.12); color: var(--build); }
+.phase-Recovery   { background: rgba(251,191,36,0.12); color: var(--recovery); }
+.phase-Peak       { background: rgba(248,113,113,0.12); color: var(--peak); }
+.phase-Taper      { background: rgba(192,132,252,0.12); color: var(--taper); }
+.phase-Rebuild    { background: rgba(52,211,153,0.12); color: var(--rebuild); }
+.phase-RACE       { background: rgba(255,107,53,0.2); color: var(--race); }
 
 /* Toast */
 .toast {
 position: fixed;
 bottom: 32px; right: 32px;
-background: var(–card);
-border: 1px solid var(–done);
+background: var(--card);
+border: 1px solid var(--done);
 border-radius: 4px;
 padding: 14px 20px;
 font-family: ‘DM Mono’, monospace;
@@ -418,18 +418,18 @@ transform: translateY(0);
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(–bg); }
-::-webkit-scrollbar-thumb { background: var(–border); border-radius: 2px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
 .hero-divider {
 width: 40px; height: 2px;
-background: var(–accent);
+background: var(--accent);
 margin: 12px 0;
 }
 
 .subtitle {
 font-size: 14px;
-color: var(–muted);
+color: var(--muted);
 font-family: ‘DM Mono’, monospace;
 }
 </style>
@@ -497,7 +497,7 @@ font-family: ‘DM Mono’, monospace;
 
 <script>
 const PLAN = [
-  { week:1,  dates:"Mar 9–15",     phase:"Base",     easy:"2 miles easy",              tempo:"3 miles w/ strides",              long:"5 miles",                          note:"Start easy — every run should feel conversational" },
+  { week:1,  dates:"Mar 9–15",     phase:"RACE",     easy:"2 miles easy",              tempo:"3 miles w/ strides",              long:"Color me Green: 5k",               note:"Start easy — every run should feel conversational" },
   { week:2,  dates:"Mar 16–22",    phase:"Base",     easy:"2.5 miles easy",            tempo:"3 miles w/ strides",              long:"5.5 miles",                        note:"Build slowly; avoid the temptation to go faster" },
   { week:3,  dates:"Mar 23–29",    phase:"Base",     easy:"3 miles easy",              tempo:"3.5 miles w/ 4×30 sec pickups",   long:"6 miles",                          note:"Introduce short accelerations on tempo day" },
   { week:4,  dates:"Mar 30–Apr 5", phase:"Recovery", easy:"2.5 miles easy",            tempo:"3 miles easy",                    long:"5 miles",                          note:"Recovery week — back off to let your body adapt" },
@@ -539,8 +539,8 @@ const PLAN = [
 const STORAGE_KEY = 'hm_tracker_v1';
 
 // JSONBin config — filled in after setup
-const JSONBIN_API_KEY = '$2a$10$REPLACE_WITH_YOUR_API_KEY';
-const JSONBIN_BIN_ID  = 'REPLACE_WITH_YOUR_BIN_ID';
+const JSONBIN_API_KEY = '$2a$10$kwwjQjvpD3s8YQTSWlXb.ez6xuuNgehxjdsynFA5L7HROgh8Dwaiq';
+const JSONBIN_BIN_ID  = '69bab815c3097a1dd537f7d7';
 const JSONBIN_URL     = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
 
 function loadState() {
@@ -574,7 +574,7 @@ function scheduleJsonBinSync(st) {
 }
 
 async function pushToJsonBin(st) {
-  if (JSONBIN_BIN_ID === 'REPLACE_WITH_YOUR_BIN_ID') return;
+  //if (JSONBIN_BIN_ID === 'REPLACE_WITH_YOUR_BIN_ID') return;
   const payload = buildSyncPayload(st);
   try {
     const res = await fetch(JSONBIN_URL, {
