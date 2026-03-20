@@ -29,7 +29,7 @@
 - { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-font-family: ‘DM Sans’, sans-serif;
+font-family: 'DM Sans', sans-serif;
 background: var(--bg);
 color: var(--text);
 min-height: 100vh;
@@ -63,7 +63,7 @@ margin: 0 auto;
 }
 
 .hero h1 {
-font-family: ‘Bebas Neue’, sans-serif;
+font-family: 'Bebas Neue', sans-serif;
 font-size: clamp(48px, 7vw, 88px);
 line-height: 0.95;
 letter-spacing: 2px;
@@ -80,7 +80,7 @@ gap: 8px;
 }
 
 .race-countdown {
-font-family: ‘DM Mono’, monospace;
+font-family: 'DM Mono', monospace;
 font-size: 13px;
 color: var(--muted);
 text-align: right;
@@ -89,7 +89,7 @@ text-align: right;
 .race-countdown strong {
 display: block;
 font-size: 28px;
-font-family: ‘Bebas Neue’, sans-serif;
+font-family: 'Bebas Neue', sans-serif;
 color: var(–accent2);
 letter-spacing: 1px;
 }
@@ -115,7 +115,7 @@ gap: 2px;
 }
 
 .stat-num {
-font-family: ‘Bebas Neue’, sans-serif;
+font-family: 'Bebas Neue', sans-serif;
 font-size: 32px;
 line-height: 1;
 color: var(--accent);
@@ -159,7 +159,7 @@ margin-bottom: 28px;
 }
 
 .filter-btn {
-font-family: ‘DM Mono’, monospace;
+font-family: 'DM Mono', monospace;
 font-size: 11px;
 letter-spacing: 1px;
 text-transform: uppercase;
@@ -209,7 +209,7 @@ user-select: none;
 }
 
 .week-num {
-font-family: ‘Bebas Neue’, sans-serif;
+font-family: 'Bebas Neue', sans-serif;
 font-size: 28px;
 color: var(--muted);
 line-height: 1;
@@ -219,13 +219,13 @@ line-height: 1;
 .week-card.completed .week-num { color: var(--done); }
 
 .week-dates {
-font-family: ‘DM Mono’, monospace;
+font-family: 'DM Mono', monospace;
 font-size: 12px;
 color: var(--muted);
 }
 
 .phase-tag {
-font-family: ‘DM Mono’, monospace;
+font-family: 'DM Mono', monospace;
 font-size: 10px;
 letter-spacing: 1px;
 text-transform: uppercase;
@@ -293,7 +293,7 @@ overflow: hidden;
 }
 
 .run-card::before {
-content: ‘’;
+content: '';
 position: absolute;
 top: 0; left: 0; right: 0;
 height: 2px;
@@ -316,7 +316,7 @@ background: rgba(34,197,94,0.04);
 .run-card.checked::before { opacity: 1; background: var(--done) !important; }
 
 .run-type-label {
-font-family: ‘DM Mono’, monospace;
+font-family: 'DM Mono', monospace;
 font-size: 10px;
 letter-spacing: 1.5px;
 text-transform: uppercase;
@@ -344,7 +344,7 @@ color: var(--muted);
 display: flex;
 align-items: center;
 gap: 8px;
-font-family: ‘DM Mono’, monospace;
+font-family: 'DM Mono', monospace;
 font-size: 11px;
 letter-spacing: 0.5px;
 color: var(--muted);
@@ -401,7 +401,7 @@ background: var(--card);
 border: 1px solid var(--done);
 border-radius: 4px;
 padding: 14px 20px;
-font-family: ‘DM Mono’, monospace;
+font-family: 'DM Mono', monospace;
 font-size: 13px;
 color: var(--done);
 opacity: 0;
@@ -430,7 +430,7 @@ margin: 12px 0;
 .subtitle {
 font-size: 14px;
 color: var(--muted);
-font-family: ‘DM Mono’, monospace;
+font-family: 'DM Mono', monospace;
 }
 </style>
 
@@ -497,7 +497,7 @@ font-family: ‘DM Mono’, monospace;
 
 <script>
 const PLAN = [
-  { week:1,  dates:"Mar 9–15",     phase:"Base",     easy:"2 miles easy",              tempo:"3 miles w/ strides",              long:"5 miles",                          note:"Start easy — every run should feel conversational" },
+  { week:1,  dates:"Mar 9–15",     phase:"RACE",     easy:"2 miles easy",              tempo:"3 miles w/ strides",              long:"RACE DAY: 5k",                          note:"Start easy — every run should feel conversational" },
   { week:2,  dates:"Mar 16–22",    phase:"Base",     easy:"2.5 miles easy",            tempo:"3 miles w/ strides",              long:"5.5 miles",                        note:"Build slowly; avoid the temptation to go faster" },
   { week:3,  dates:"Mar 23–29",    phase:"Base",     easy:"3 miles easy",              tempo:"3.5 miles w/ 4×30 sec pickups",   long:"6 miles",                          note:"Introduce short accelerations on tempo day" },
   { week:4,  dates:"Mar 30–Apr 5", phase:"Recovery", easy:"2.5 miles easy",            tempo:"3 miles easy",                    long:"5 miles",                          note:"Recovery week — back off to let your body adapt" },
@@ -554,15 +554,15 @@ function saveState(st) {
 
 function buildSyncPayload(st) {
   const done = PLAN.reduce((sum, w) =>
-    sum + ['easy','tempo','long'].filter(t => !!st[`w${w.week}_${t}`]).length, 0);
+    sum + ['easy','tempo','long'].filter(t => !!st['w${w.week}_${t}']).length, 0);
   const total = PLAN.length * 3;
-  const weeks = PLAN.filter(w => ['easy','tempo','long'].every(t => !!st[`w${w.week}_${t}`])).length;
+  const weeks = PLAN.filter(w => ['easy','tempo','long'].every(t => !!st['w${w.week}_${t}'])).length;
   const today = new Date();
   const race = new Date('2026-11-14');
   today.setHours(0,0,0,0); race.setHours(0,0,0,0);
   const daysLeft = Math.max(0, Math.round((race - today) / 86400000));
   const curWeek = getCurrentWeek();
-  const weekRuns = ['easy','tempo','long'].filter(t => !!st[`w${curWeek}_${t}`]).length;
+  const weekRuns = ['easy','tempo','long'].filter(t => !!st['w${curWeek}_${t}']).length;
   return { done, total, weeks, daysLeft, currentWeek: curWeek, weekRuns, lastSync: new Date().toISOString() };
 }
 
@@ -595,7 +595,7 @@ async function pushToJsonBin(st) {
 
 function updateSyncBadge(payload) {
   const el = document.getElementById('sync-badge');
-  if (el) el.textContent = `Synced at ${new Date(payload.lastSync).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}`;
+  if (el) el.textContent = 'Synced at ${new Date(payload.lastSync).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}';
 }
 
 function manualExport() {
@@ -641,7 +641,7 @@ function toggleRun(week, type) {
   state[key] = !state[key];
   saveState(state);
   renderAll();
-  showToast(state[key] ? `✓ Run logged!` : `Run unmarked`);
+  showToast(state[key] ? '✓ Run logged!' : 'Run unmarked');
 }
 
 function totalRuns() { return PLAN.length * 3; }
@@ -703,7 +703,7 @@ function renderAll() {
     card.dataset.week = w.week;
 
     const dots = ['easy','tempo','long'].map(t =>
-      `<div class="run-dot ${isChecked(w.week, t) ? 'done' : ''}"></div>`
+      '<div class="run-dot ${isChecked(w.week, t) ? 'done' : ''}"></div>'
     ).join('');
 
     const phaseClass = 'phase-' + w.phase.replace(/\s+/g, '');
