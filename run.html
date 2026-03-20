@@ -535,89 +535,95 @@ const PLAN = [
   { week:36, dates:"Nov 9–14",     phase:"RACE",     easy:"2 miles easy (Nov 10)",     tempo:"1.5 miles w/ strides (Nov 12)",   long:"RACE DAY: Nov 14 — Half Marathon!", note:"You made it. Run your race. Enjoy every mile." },
 ];
 
-// Storage key
-const STORAGE_KEY = 'hm_tracker_v1';
+
 
 // JSONBin config — filled in after setup
 const JSONBIN_API_KEY = '$2a$10$kwwjQjvpD3s8YQTSWlXb.ez6xuuNgehxjdsynFA5L7HROgh8Dwaiq';
 const JSONBIN_BIN_ID  = '69bab815c3097a1dd537f7d7';
 const JSONBIN_URL     = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
 
-function loadState() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; }
+
+// In-memory state — loaded from JSONBin on startup
+let state = {};
+
+// Show a loading overlay while fetching
+function showLoading(on) {
+  let el = document.getElementById('loading-overlay');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'loading-overlay';
+    el.style.cssText = 'position:fixed;inset:0;background:#0c0e10;display:flex;align-items:center;justify-content:center;z-index:999;font-family:DM Mono,monospace;font-size:14px;color:#6b7280;letter-spacing:1px;';
+    el.textContent = 'Loading...';
+    document.body.appendChild(el);
+  }
+  el.style.display = on ? 'flex' : 'none';
 }
 
-function saveState(st) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(st)); } catch(e) {}
-  scheduleJsonBinSync(st);
+// GET state from JSONBin on page load
+async function loadState() {
+  showLoading(true);
+  try {
+    const res = await fetch(`${JSONBIN_URL}/latest`, {
+      headers: {
+        'X-Master-Key': JSONBIN_API_KEY,
+        'X-Bin-Meta': 'false'
+      }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      // The bin stores the raw state object {w1_easy: true, w1_tempo: false, ...}
+      state = data || {};
+    } else {
+      console.error('JSONBin GET error', res.status);
+      showToast('Could not load data: ' + res.status);
+    }
+  } catch(e) {
+    console.error('JSONBin GET failed', e);
+    showToast('Could not reach JSONBin');
+  }
+  showLoading(false);
 }
 
-function buildSyncPayload(st) {
-  const done = PLAN.reduce((sum, w) =>
-    sum + ['easy','tempo','long'].filter(t => !!st[`w${w.week}_${t}`]).length, 0);
-  const total = PLAN.length * 3;
-  const weeks = PLAN.filter(w => ['easy','tempo','long'].every(t => !!st[`w${w.week}_${t}`])).length;
-  const today = new Date();
-  const race = new Date('2026-11-14');
-  today.setHours(0,0,0,0); race.setHours(0,0,0,0);
-  const daysLeft = Math.max(0, Math.round((race - today) / 86400000));
-  const curWeek = getCurrentWeek();
-  const weekRuns = ['easy','tempo','long'].filter(t => !!st[`w${curWeek}_${t}`]).length;
-  return { done, total, weeks, daysLeft, currentWeek: curWeek, weekRuns, lastSync: new Date().toISOString() };
-}
-
-// Debounced JSONBin push — fires 2 seconds after last run toggle
+// Debounced PUT — fires 1 second after last toggle
 let syncTimer;
-function scheduleJsonBinSync(st) {
+function saveState(st) {
   clearTimeout(syncTimer);
-  syncTimer = setTimeout(() => pushToJsonBin(st), 2000);
+  syncTimer = setTimeout(() => pushToJsonBin(st), 1000);
 }
 
 async function pushToJsonBin(st) {
-  //if (JSONBIN_BIN_ID === 'REPLACE_WITH_YOUR_BIN_ID') return;
-  const payload = buildSyncPayload(st);
+  updateSyncBadge('saving...');
   try {
     const res = await fetch(JSONBIN_URL, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'X-Access-Key': JSONBIN_API_KEY,
+        'X-Master-Key': JSONBIN_API_KEY,
         'X-Bin-Versioning': 'false'
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(st)
     });
     if (res.ok) {
-      updateSyncBadge(payload);
-      showToast('Widget synced');
+      updateSyncBadge('saved');
     } else {
       const txt = await res.text();
-      showToast('Sync error ' + res.status + ': ' + txt.slice(0, 80));
-      console.error('JSONBin error', res.status, txt);
+      showToast('Save error ' + res.status + ': ' + txt.slice(0, 60));
+      console.error('JSONBin PUT error', res.status, txt);
+      updateSyncBadge('error');
     }
   } catch(e) {
-    showToast('Sync failed: ' + e.message);
-    console.error('JSONBin fetch error', e);
+    showToast('Save failed: ' + e.message);
+    console.error('JSONBin PUT failed', e);
+    updateSyncBadge('error');
   }
 }
 
-function updateSyncBadge(payload) {
+function updateSyncBadge(msg) {
   const el = document.getElementById('sync-badge');
-  if (el) el.textContent = `Synced at ${new Date(payload.lastSync).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}`;
+  if (el) el.textContent = msg === 'saved'
+    ? 'Saved ' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})
+    : msg;
 }
-
-function manualExport() {
-  const payload = buildSyncPayload(state);
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'hm_progress.json';
-  a.click();
-  URL.revokeObjectURL(a.href);
-  updateSyncBadge(payload);
-  showToast('hm_progress.json saved');
-}
-
-let state = loadState();
 
 // Determine current week
 function getCurrentWeek() {
@@ -770,14 +776,15 @@ function showToast(msg) {
   toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
 }
 
-// Initial render — open current week
-renderAll();
-// Auto-open current week on load
-setTimeout(() => {
-  const cur = document.querySelector(`.week-card[data-week="${currentWeek}"]`);
-  if (cur) { cur.classList.add('open'); cur.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-}, 100);
+// Boot: load from JSONBin then render
+(async () => {
+  await loadState();
+  renderAll();
+  setTimeout(() => {
+    const cur = document.querySelector(`.week-card[data-week="${currentWeek}"]`);
+    if (cur) { cur.classList.add('open'); cur.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+  }, 100);
+})();
 </script>
-
 </body>
 </html>
