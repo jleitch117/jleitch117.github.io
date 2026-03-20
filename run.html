@@ -708,7 +708,7 @@ function renderAll() {
 
     const phaseClass = 'phase-' + w.phase.replace(/\s+/g, '');
 
-    card.innerHTML = `
+    card.innerHTML = '
       <div class="week-header" onclick="toggleWeek(this.closest('.week-card'))">
         <div class="week-num">${String(w.week).padStart(2,'0')}</div>
         <div class="week-dates">${w.dates}</div>
@@ -726,7 +726,7 @@ function renderAll() {
         </div>
         <div class="week-note">${w.note}</div>
       </div>
-    `;
+    ';
 
     grid.appendChild(card);
   });
@@ -734,7 +734,7 @@ function renderAll() {
 
 function renderRunCard(w, type, label, desc) {
   const checked = isChecked(w.week, type);
-  return `
+  return '
     <div class="run-card ${type} ${checked ? 'checked' : ''}" onclick="toggleRun(${w.week}, '${type}')">
       <div class="run-type-label">${label}</div>
       <div class="run-description">${desc}</div>
@@ -747,7 +747,7 @@ function renderRunCard(w, type, label, desc) {
         ${checked ? 'Completed' : 'Mark complete'}
       </div>
     </div>
-  `;
+  ';
 }
 
 function toggleWeek(card) {
@@ -767,7 +767,7 @@ function showToast(msg) {
 renderAll();
 // Auto-open current week on load
 setTimeout(() => {
-  const cur = document.querySelector(`.week-card[data-week="${currentWeek}"]`);
+  const cur = document.querySelector('.week-card[data-week="${currentWeek}"]');
   if (cur) { cur.classList.add('open'); cur.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
 }, 100);
 </script>
